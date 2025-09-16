@@ -6,7 +6,7 @@
 /*   By: ieddaoud <ieddaoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 18:43:14 by ieddaoud          #+#    #+#             */
-/*   Updated: 2025/09/10 20:27:44 by ieddaoud         ###   ########.fr       */
+/*   Updated: 2025/09/13 17:00:15 by ieddaoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,15 @@ typedef struct s_bmap
 ///-------------parsing-------------///
 //----->tools
 size_t	ft_strlen(char *s);
-// int		ft_strncmp(char *s1, char *s2, size_t n);
+int		ft_strncmp(char *s1, char *s2, size_t n);
 int		ft_strcmp(char *s1, char *s2);
+char	*ft_strdup(char *s);
+char	*ft_strtrim(char *s1, char *set);
 
+//------>free
+void	free_all(void *p, int flag);
+void	ft_done(size_t i);
+void	*ft_alloc(size_t i);
 //----->get_next_line
 
 char	*ft_join(char *dest, char *s1, char *s2);
@@ -65,6 +71,7 @@ char	*get_next_line(int fd);
 void	init_map(t_bmap *bmap);
 // int		check_map(char *name);
 char	**check_map(char *name);
+int	verify_map(char *name, int *i);
 
 
 #endif
