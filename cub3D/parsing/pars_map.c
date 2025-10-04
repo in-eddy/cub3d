@@ -6,7 +6,7 @@
 /*   By: ieddaoud <ieddaoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 19:29:02 by ieddaoud          #+#    #+#             */
-/*   Updated: 2025/09/15 12:20:11 by ieddaoud         ###   ########.fr       */
+/*   Updated: 2025/10/04 17:17:07 by ieddaoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ int	check_spaces(char *str, int *j)
 		while (str[*j] && (str[*j] == ' ' || str[*j] == '	'))
 		{
 			(*j)++;
-			if (str[*j] == '0' && (str[(*j) + 1] == ' ' || str[(*j) + 1] == '	'))
-				(*j)++;
-			else
-				return (0);
+			// if (str[*j] == '0' && (str[(*j) + 1] == ' ' || str[(*j) + 1] == '	'))
+			// 	(*j)++;
+			// else
+			// 	return (0);
 		}
 		if (str[*j] && str[*j] != '1')
 			return (0);
@@ -93,7 +93,7 @@ int	check_spaces(char *str, int *j)
 	return (1);
 }
 
-int	pars_s_map(char *str)
+int	pars_s_map(char *str)/// as loop ///walls
 {
 	int	j;
 	int	flag;
@@ -120,9 +120,10 @@ int	pars_s_map(char *str)
 		}
 		return (flag);
 	}
+	
 }
 
-int	check_pars(char *str)
+int	check_pars(char *str)///// as loop
 {
 	int	res;
 
@@ -136,12 +137,37 @@ int	check_pars(char *str)
 	return (1);
 }
 
-char	*fill_map_2(char *lines, int *i)
+int	find_max(char **lines)
 {
-	
+	int	i;
+	int	j;
+	int	max;
+	char	*str;
+
+	i = 0;
+	max = 0;
+	while (lines[i])
+	{
+		j = 0;
+		str = ft_strtrim(lines[i], " 	\n");
+		while (str[j])
+			j++;
+		if (j > max)
+			max = j;
+		i++;
+	}
+	return (max);
 }
 
-t_bmap	*fill_map(char *lines, int *i, t_bmap *my_map)
+// char	*fill_map_2(char *lines, int *i, int max)
+// {
+// 	int	j;
+
+// 	j = 0;
+// 	while ()
+// }
+
+t_bmap	*fill_map(char *lines, int *i, t_bmap *my_map, int max)
 {
 	char	*str;
 	int		j;
@@ -180,6 +206,8 @@ t_bmap	*fill_map(char *lines, int *i, t_bmap *my_map)
 	while (k <= (*i))
 	{
 		// my_map->map[j] = ///lmap lm9ada
+		j++;
+		k++;
 	}
 	my_map->map[j] = NULL;
 }
@@ -210,7 +238,7 @@ t_bmap	*pars_map(char	**lines)
 			else if (!ft_strncmp(str, "C", 1))
 				my_map->f += 1;
 			else
-				return (write(2, "wrong caractere\n", 17), NULL);
+				return (write(2, "wrong character\n", 17), NULL);
 		}
 		// else
 		// --->stock function
@@ -223,7 +251,7 @@ t_bmap	*pars_map(char	**lines)
 				else
 					return (write(2, "duplicate identifier\n", 22), NULL);
 			}
-			////the small map; 
+			////the small map;//+ max function 
 		}
 		i++;
 	}
