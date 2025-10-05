@@ -6,7 +6,7 @@
 /*   By: ieddaoud <ieddaoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 18:43:14 by ieddaoud          #+#    #+#             */
-/*   Updated: 2025/10/04 18:36:16 by ieddaoud         ###   ########.fr       */
+/*   Updated: 2025/10/04 23:34:53 by ieddaoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <stdio.h>////
 // # include <limits.h>
-#include "mlx.h"
+// #include "mlx.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -77,7 +77,8 @@ char	*update(char *backup);
 char	*get_next_line(int fd);
 
 //----->map
-void	init_map(t_map	*map);
+// void	init_map(t_map	*map);
+t_map	*init_map(void);
 int	verify_map(char *name, int *i);
 char	**check_map(char *name);
 int	find_max(char **lines);

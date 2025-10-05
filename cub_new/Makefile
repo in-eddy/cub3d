@@ -1,14 +1,14 @@
 # CC = cc 
-# CFLAGS = -Wall -Wextra -Werror -Iminilibx-linux
+# CFLAGS = -Wall -Wextra -Werror -Iminilibx-linux -fsanitize=address
 # # MFLAGS = -lmlx -framework AppKit -framework OpenGL
-# MFLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm
+# # MFLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm
 # SRC = free.c parsing/get_next_line.c parsing/get_next_line_utils.c parsing/main.c parsing/pars_map.c parsing/tools.c parsing/tools2.c
 # OBJ = $(SRC:.c=.o)
 # NAME = cub3D
 # all : $(NAME) 
 
 # $(NAME) : $(OBJ)
-# 	$(CC) $(OBJ) $(MFLAGS) -o $(NAME)
+# 	$(CC) $(OBJ) -o $(NAME)
 
 # %.o:%.c parsing/cub3d.h
 # 	$(CC) $(CFLAGS) -c $< -o $@
