@@ -6,7 +6,7 @@
 /*   By: ieddaoud <ieddaoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 18:42:55 by ieddaoud          #+#    #+#             */
-/*   Updated: 2025/10/05 01:49:05 by ieddaoud         ###   ########.fr       */
+/*   Updated: 2025/10/05 19:28:00 by ieddaoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ int main(int ac, char **av)
 		ft_done(1);
 	map = init_map();
 	map = pars_map(lines, map);
-	if (!map)
+	if (!map || !map->map)
 		ft_done(1);
 	int i = 0;
 	while (map->map[i])
 	{
-		printf("%s\n",map->map[i]);
+		printf("%s",map->map[i]);
 		i++;
 	}
 	

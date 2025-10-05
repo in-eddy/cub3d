@@ -6,7 +6,7 @@
 /*   By: ieddaoud <ieddaoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 18:43:14 by ieddaoud          #+#    #+#             */
-/*   Updated: 2025/10/04 23:34:53 by ieddaoud         ###   ########.fr       */
+/*   Updated: 2025/10/05 19:47:17 by ieddaoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdio.h>////
 // # include <limits.h>
 // #include "mlx.h"
+#include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -60,6 +61,7 @@ int		ft_strncmp(char *s1, char *s2, size_t n);
 int		ft_strcmp(char *s1, char *s2);
 char	*ft_strdup(char *s);
 char	*ft_strtrim(char *s1, char *set);
+char	*ft_strjoin2(char *s1, char *s2);
 
 //------>free
 void	free_all(void *p, int flag);

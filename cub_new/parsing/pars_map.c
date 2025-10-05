@@ -6,7 +6,7 @@
 /*   By: ieddaoud <ieddaoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 19:29:02 by ieddaoud          #+#    #+#             */
-/*   Updated: 2025/10/05 01:48:44 by ieddaoud         ###   ########.fr       */
+/*   Updated: 2025/10/05 19:53:10 by ieddaoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,33 @@ int	check_flag(t_map *map)
 	return (1);
 }
 
+char	*ft_strjoin2(char *s1, char *s2)
+{
+	size_t	i;
+	size_t	j;
+	char	*d;
+
+	i = 0;
+	j = 0;
+	if (s1 == NULL && s2 == NULL)
+		return (NULL);
+	if (s1 == NULL)
+		return (ft_strdup(s2));
+	if (s2 == NULL)
+		return (ft_strdup(s1));
+	d = ft_alloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!d)
+		return (NULL);
+	while (s1 && i < ft_strlen(s1))
+		d[j++] = s1[i++];
+	i = 0;
+	while (s2 && i < ft_strlen(s2))
+		d[j++] = s2[i++];
+	d[j] = '\0';
+	return (d);
+}
+
+
 char	**pars_s_map(char **lines, int *i, int max)
 {
 	char	*str;
@@ -168,17 +195,25 @@ char	**pars_s_map(char **lines, int *i, int max)
 			return (write(2, "empty line\n", 12), NULL);
 		map[k] = ft_alloc(sizeof(char) * (max + 1));
 		j = 0;
-		while (str[j] && j <= max)
+		while (str[j] && j < max)
 		{
-			// if (!str[j + 1] && (j + 1) <= max)
-			// {
-			// 	j++;
-			// 	while (j < max)
-			// 	map[k][j++] = '1';
-			// }
+			if (!str[j + 1] && (j + 1) <= max)
+			{
+				while (j < max)
+				{
+					if (map[k][j] == '\n')
+						printf("here\n");
+					map[k][j] = '#';
+					j++;
+				}
+				// if (j == max)
+				// 	printf("before == %c\n", map[k][j]),map[k][j] = '\n', printf("After == %c\n\n", map[k][j]);
+				break;
+			}
 			map[k][j] = str[j];
 			j++;
 		}
+		// map[k][j++] = '\n';
 		map[k][j] = '\0';
 		(*i)++;
 		k++;
@@ -198,7 +233,12 @@ t_map	*pars_map(char **lines, t_map *map)
 	while (lines[i])
 	{
 		str = ft_strtrim(lines[i], " \t");
-		if (str && str[0] != '1')
+		if (!ft_strcmp(str, "\n"))
+		{
+			i++;
+			continue;
+		}
+		if (str && str[0] != '1' && str[0] != '0')
 		{
 			if (!ft_strncmp(str, "NO", 2))
 			map->flag->no++;
@@ -217,14 +257,12 @@ t_map	*pars_map(char **lines, t_map *map)
 		}
 		// else
 		// --->stock pic
-		else if (str && str[0] == '1')
+		else if (str && (str[0] == '1' || str[0] == '0'))
 		{
-			puts("1");
 			if (!check_flag(map))
 				return (ft_done(1), NULL);
 			map->map = pars_s_map(lines, &i, max);
-			if (!map->map)
-                return (NULL);
+			break;
 		}
 		i++;
 	}
