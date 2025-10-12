@@ -36,6 +36,7 @@ typedef struct s_flag
 	int	ea;
 	int f;
 	int	c;
+	int	p;
 }	t_flag;
 
 typedef struct s_map
@@ -88,7 +89,8 @@ int	check_flag(t_map *map);
 char	**pars_s_map(char **lines, int *i, int max);
 t_map	*pars_map(char **lines, t_map *map);
 int	is_valid(char c);
-int	check_walls(char **map);
+int	check_walls(t_map *map);
 int	final_parsing(t_map *map);
+int	find_player(t_map *map);
 
 #endif

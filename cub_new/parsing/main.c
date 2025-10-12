@@ -34,7 +34,7 @@ int main(int ac, char **av)
 		exit(1);
 	map = init_map();
 	map = pars_map(lines, map);
-	if (!map || !map->map || !final_parsing(map))
+	if (!map || !map->map || !check_walls(map))
 	// ft_done(1);
 		exit(1);
 	int i = 0;

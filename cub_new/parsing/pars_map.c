@@ -61,6 +61,7 @@ t_map	*init_map(void)
 	map->flag->ea = 0;
 	map->flag->f = 0;
 	map->flag->c = 0;
+	map->flag->p = 0;
 	map->p = '\0';
 	map->p_ea = NULL;
 	map->p_no = NULL;
@@ -223,6 +224,30 @@ char	**pars_s_map(char **lines, int *i, int max)
 	return (map);
 }
 
+int	find_player(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map->map[i])
+	{
+		j = 0;
+		while (map->map[i][j])
+		{
+			if (is_valid(map->map[i][j]) && map->map[i][j] != '1' && map->map[i][j] != '0')
+				map->flag->p += 1;
+			j++;
+		}
+		i++;
+	}
+	if (!map->flag->p)
+		return (write(2, "missing player\n", 16), 0);
+	else if (map->flag->p > 1)
+		return (write(2, "duplicate player\n", 18), 0);
+	return (1);
+}
+
 t_map	*pars_map(char **lines, t_map *map)
 {
 	char	*str;
@@ -269,7 +294,6 @@ t_map	*pars_map(char **lines, t_map *map)
 		}
 		i++;
 	}
-	///pars_s_m
 	return (map);
 }
 
@@ -279,34 +303,38 @@ int	is_valid(char c)
 		|| c == '1' || c == '0');
 }
 
-int	check_walls(char **map)
+int	check_walls(t_map *map)
 {
 	int	i;
 	int	j;
 
+	if (!final_parsing(map)|| !find_player(map))
+		return (0);
 	j = 0;
-	while (map[0][j] && map[0][j] != '\n')
+	while (map->map[0][j] && map->map[0][j] != '\n')
 	{
-		if (map[0][j] != '1' && map[0][j] != ' ' && map[0][j] != '\t')
-			return (write(2, "open wall1\n", 11), 0);
+		if (map->map[0][j] != '1' && map->map[0][j] != ' ' && map->map[0][j] != '\t')
+			return (write(2, "open wall\n", 11), 0);
 		j++;
 	}
 	i = 1;
-	while (map[i])
+	while (map->map[i])
 	{
 		j = 0;
-		while (map[i][j])
+		while (map->map[i][j])
 		{
-			while (map[i][j] == ' ' || map[i][j] == '\t')
+			while (map->map[i][j] == ' ' || map->map[i][j] == '\t')
 				j++;
-			if (map[i][j] != '1' && map[i][j] != '\n')
-				return (write(2, "open wall4\n", 11), 0);
+			if (map->map[i][j] != '1' && map->map[i][j] != '\n')
+				return (write(2, "open wall\n", 11), 0);
 			else
 			{
-				while (map[i][j] && map[i][j] != ' ' && map[i][j] != '\t' && map[i][j] != '\n')
+				while (map->map[i][j] != '\n')
 					j++;
-				if (map[i][j - 1] != '1')
-					return (write(2, "open wall2\n", 11), 0);
+				while (map->map[i][j] == ' ' || map->map[i][j] == '\t' || map->map[i][j] == '\n')
+					j--;
+				if (map->map[i][j] != '1')
+					return (write(2, "open wall\n", 11), 0);
 				else
 					break;
 			}
@@ -315,11 +343,11 @@ int	check_walls(char **map)
 		i++;
 	}
 	j = 0;
-	while (map[i - 1][j])
+	while (map->map[i - 1][j])
 	{
-		if (map[i - 1][j] != '1' && map[i - 1][j] != ' '
-			&& map[i - 1][j] != '\t' && map[i - 1][j] != '\n')
-			return (write(2, "open wall5\n", 11), 0);
+		if (map->map[i - 1][j] != '1' && map->map[i - 1][j] != ' '
+			&& map->map[i - 1][j] != '\t' && map->map[i - 1][j] != '\n')
+			return (write(2, "open wall\n", 11), 0);
 		j++;
 	}
 	return (1);
@@ -373,8 +401,8 @@ int	final_parsing(t_map *map)
 	int	i;
 	int	j;
 	
-	if (!check_walls(map->map))
-		return (0);
+	// if (!check_walls(map->map) || !find_player(map))
+	// 	return (0);
 	i = 0;
 	while (map->map[i])
 	{
