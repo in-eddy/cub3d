@@ -6,7 +6,7 @@
 /*   By: ieddaoud <ieddaoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 18:43:14 by ieddaoud          #+#    #+#             */
-/*   Updated: 2025/10/05 19:47:17 by ieddaoud         ###   ########.fr       */
+/*   Updated: 2025/10/12 10:13:12 by ieddaoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,8 @@ int	find_max(char **lines);
 int	check_flag(t_map *map);
 char	**pars_s_map(char **lines, int *i, int max);
 t_map	*pars_map(char **lines, t_map *map);
+int	is_valid(char c);
+int	check_walls(char **map);
+int	final_parsing(t_map *map);
 
 #endif

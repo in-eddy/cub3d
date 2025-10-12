@@ -6,7 +6,7 @@
 /*   By: ieddaoud <ieddaoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 17:58:59 by ieddaoud          #+#    #+#             */
-/*   Updated: 2025/09/13 16:55:09 by ieddaoud         ###   ########.fr       */
+/*   Updated: 2025/10/11 17:46:03 by ieddaoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ char	*ft_strdup(char *s)
 	size_t	l;
 
 	l = ft_strlen(s);
-	p = ft_alloc(l + 1);
+	// p = ft_alloc(l + 1);
+	p = malloc(l + 1);
 	i = 0;
 	while (s[i])
 	{

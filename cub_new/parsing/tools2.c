@@ -6,7 +6,7 @@
 /*   By: ieddaoud <ieddaoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 17:58:52 by ieddaoud          #+#    #+#             */
-/*   Updated: 2025/10/04 21:07:21 by ieddaoud         ###   ########.fr       */
+/*   Updated: 2025/10/11 17:46:12 by ieddaoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ char	*ft_strtrim(char *s1, char *set)
 	len = j - i;
 	if (j < i)
 		len = 0;
-	d = ft_alloc(len + 1);
+	// d = ft_alloc(len + 1);
+	d = malloc(len + 1);
 	while (i < j)
 		d[k++] = s1[i++];
 	d[k] = '\0';

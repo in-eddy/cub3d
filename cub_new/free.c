@@ -6,48 +6,48 @@
 /*   By: ieddaoud <ieddaoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 17:07:53 by ieddaoud          #+#    #+#             */
-/*   Updated: 2025/10/05 19:08:27 by ieddaoud         ###   ########.fr       */
+/*   Updated: 2025/10/11 17:46:26 by ieddaoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	free_all(void *p, int flag)
-{
-	static void	*list[INT_MAX];
-	static int	i;
+// void	free_all(void *p, int flag)
+// {
+// 	static void	*list[INT_MAX];
+// 	static int	i;
 
-	if (flag)
-	{
-		list[i] = p;
-		i++;
-	}
-	else
-	{
-		while (list[i])
-		{
-			free(list[i]);
-			i--;
-		}
-	}
-}
+// 	if (flag)
+// 	{
+// 		list[i] = p;
+// 		i++;
+// 	}
+// 	else
+// 	{
+// 		while (list[i])
+// 		{
+// 			free(list[i]);
+// 			i--;
+// 		}
+// 	}
+// }
 
-void	ft_done(size_t i)
-{
-	free_all(NULL, 0);
-	exit (i);
-}
+// void	ft_done(size_t i)
+// {
+// 	free_all(NULL, 0);
+// 	exit (i);
+// }
 
-void	*ft_alloc(size_t i)
-{
-	void	*res;
+// void	*ft_alloc(size_t i)
+// {
+// 	void	*res;
 
-	res = malloc(i);
-	if (!res)
-		ft_done(0);
-	free_all(res, 1);
-	return (res);
-}
+// 	res = malloc(i);
+// 	if (!res)
+// 		ft_done(0);
+// 	free_all(res, 1);
+// 	return (res);
+// }
 
 // #include <stdio.h>
 // #include <stdlib.h>

@@ -6,7 +6,7 @@
 /*   By: ieddaoud <ieddaoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 19:29:02 by ieddaoud          #+#    #+#             */
-/*   Updated: 2025/10/05 19:53:10 by ieddaoud         ###   ########.fr       */
+/*   Updated: 2025/10/12 12:04:53 by ieddaoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ t_map	*init_map(void)
 {
 	t_map	*map;
 
-	map = ft_alloc(sizeof(t_map));
+	// map = ft_alloc(sizeof(t_map));
+	map = malloc(sizeof(t_map));
 	if (!map)
 		return (NULL);
 
@@ -50,7 +51,8 @@ t_map	*init_map(void)
 	map->y = 0;
 	map->map_h = 0;
 	map->map_w = 0;
-	map->flag = ft_alloc(sizeof(t_flag));
+	// map->flag = ft_alloc(sizeof(t_flag));
+	map->flag = malloc(sizeof(t_flag));
 	if (!map->flag)
 		return (NULL);
 	map->flag->no = 0;
@@ -102,7 +104,8 @@ char	**check_map(char *name)
 	fd = open(name, O_RDONLY);
 	if (fd < 0)
 		return (write(2, "failed opening the file\n", 25), NULL);
-	lines = ft_alloc(sizeof(char *) * (i + 1));
+	// lines = ft_alloc(sizeof(char *) * (i + 1));
+	lines = malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while((line = get_next_line(fd)))
 	{
@@ -125,7 +128,8 @@ int	find_max(char **lines)
 	max = 0;
 	while (lines[i])
 	{
-		str = ft_strtrim(lines[i], " \t");
+		// str = ft_strtrim(lines[i], " \t");
+		str = lines[i];
 		j = 0;
 		while (str[j])
 			j++;
@@ -147,7 +151,7 @@ int	check_flag(t_map *map)
 	return (1);
 }
 
-char	*ft_strjoin2(char *s1, char *s2)
+char	*ft_strjoin2(char *s1, char *s2)/////
 {
 	size_t	i;
 	size_t	j;
@@ -161,7 +165,8 @@ char	*ft_strjoin2(char *s1, char *s2)
 		return (ft_strdup(s2));
 	if (s2 == NULL)
 		return (ft_strdup(s1));
-	d = ft_alloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	// d = ft_alloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	d = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!d)
 		return (NULL);
 	while (s1 && i < ft_strlen(s1))
@@ -176,7 +181,7 @@ char	*ft_strjoin2(char *s1, char *s2)
 
 char	**pars_s_map(char **lines, int *i, int max)
 {
-	char	*str;
+	// char	*str;
 	char	**map;
 	int		j;
 	int		k;
@@ -185,36 +190,32 @@ char	**pars_s_map(char **lines, int *i, int max)
 	j = 0;
 	while (lines[*i])
 		(*i)++;
-	map = ft_alloc(sizeof(char *) * ((*i) - k + 1));
+	// map = ft_alloc(sizeof(char *) * ((*i) - k + 1));
+	map = malloc(sizeof(char *) * ((*i) - k + 1));
 	*i = k;
 	k = 0;
 	while (lines[*i])
 	{
-		str = ft_strtrim(lines[*i], " \t");
-		if (!ft_strcmp(str, "\n"))
+		if (!ft_strcmp(ft_strtrim(lines[*i], " \t"), "\n"))
 			return (write(2, "empty line\n", 12), NULL);
-		map[k] = ft_alloc(sizeof(char) * (max + 1));
+		// map[k] = ft_alloc(sizeof(char) * (max + 1));
+		map[k] = malloc(sizeof(char) * (max + 1));
 		j = 0;
-		while (str[j] && j < max)
+		while (lines[*i][j] && lines[*i][j] != '\n')
 		{
-			if (!str[j + 1] && (j + 1) <= max)
-			{
-				while (j < max)
-				{
-					if (map[k][j] == '\n')
-						printf("here\n");
-					map[k][j] = '#';
-					j++;
-				}
-				// if (j == max)
-				// 	printf("before == %c\n", map[k][j]),map[k][j] = '\n', printf("After == %c\n\n", map[k][j]);
-				break;
-			}
-			map[k][j] = str[j];
+			map[k][j] = lines[*i][j];
 			j++;
 		}
-		// map[k][j++] = '\n';
-		map[k][j] = '\0';
+		if ((lines[*i][j] == '\n' || !lines[*i][j]) && j < max)
+		{
+			while (j < max - 1)
+			{
+				map[k][j] = ' ';
+				j++;
+			}
+		}
+		map[k][j] = '\n';
+		map[k][++j] = '\0';
 		(*i)++;
 		k++;
 	}
@@ -228,8 +229,8 @@ t_map	*pars_map(char **lines, t_map *map)
 	int		max;
 	int		i;
 
+	max = 0;
 	i = 0;
-	max = find_max(lines);
 	while (lines[i])
 	{
 		str = ft_strtrim(lines[i], " \t");
@@ -259,12 +260,139 @@ t_map	*pars_map(char **lines, t_map *map)
 		// --->stock pic
 		else if (str && (str[0] == '1' || str[0] == '0'))
 		{
+			max = find_max(lines + i);
 			if (!check_flag(map))
-				return (ft_done(1), NULL);
+			// return (ft_done(1), NULL);
+				return (exit(1), NULL);
 			map->map = pars_s_map(lines, &i, max);
 			break;
 		}
 		i++;
 	}
+	///pars_s_m
 	return (map);
+}
+
+int	is_valid(char c)
+{
+	return ( c == 'N' || c == 'W' || c == 'E' || c == 'S'
+		|| c == '1' || c == '0');
+}
+
+int	check_walls(char **map)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	while (map[0][j] && map[0][j] != '\n')
+	{
+		if (map[0][j] != '1' && map[0][j] != ' ' && map[0][j] != '\t')
+			return (write(2, "open wall1\n", 11), 0);
+		j++;
+	}
+	i = 1;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			while (map[i][j] == ' ' || map[i][j] == '\t')
+				j++;
+			if (map[i][j] != '1' && map[i][j] != '\n')
+				return (write(2, "open wall4\n", 11), 0);
+			else
+			{
+				while (map[i][j] && map[i][j] != ' ' && map[i][j] != '\t' && map[i][j] != '\n')
+					j++;
+				if (map[i][j - 1] != '1')
+					return (write(2, "open wall2\n", 11), 0);
+				else
+					break;
+			}
+			j++;
+		}
+		i++;
+	}
+	j = 0;
+	while (map[i - 1][j])
+	{
+		if (map[i - 1][j] != '1' && map[i - 1][j] != ' '
+			&& map[i - 1][j] != '\t' && map[i - 1][j] != '\n')
+			return (write(2, "open wall5\n", 11), 0);
+		j++;
+	}
+	return (1);
+}
+
+// int	check_walls(char **map)
+// {
+// 	int		i, j;
+// 	char	*str;
+
+// 	// Check top wall
+// 	str = ft_strtrim(map[0], " \t\n");
+// 	if (!str)
+// 		return (0);
+// 	for (j = 0; str[j]; j++)
+// 		if (str[j] != '1')
+// 			return (free(str), write(2, "open wall top\n", 15), 0);
+// 	free(str);
+
+// 	// Check sides
+// 	for (i = 0; map[i]; i++)
+// 	{
+// 		j = 0;
+// 		while (map[i][j] && (map[i][j] == ' ' || map[i][j] == '\t'))
+// 			j++;
+// 		if (!map[i][j] || map[i][j] != '1')
+// 			return (write(2, "open wall left\n", 16), 0);
+// 		while (map[i][j])
+// 			j++;
+// 		j--;
+// 		while (j >= 0 && (map[i][j] == ' ' || map[i][j] == '\t'))
+// 			j--;
+// 		if (map[i][j] != '1')
+// 			return (write(2, "open wall right\n", 17), 0);
+// 	}
+
+// 	// Check bottom wall
+// 	str = ft_strtrim(map[i - 1], " \t\n");
+// 	if (!*str)
+// 		return (free(str), write(2, "empty last line\n", 16), 0);
+// 	for (j = 0; str[j]; j++)
+// 		if (str[j] != '1')
+// 			return (free(str), write(2, "open wall bottom\n", 18), 0);
+// 	free(str);
+// 	return (1);
+// }
+
+
+int	final_parsing(t_map *map)
+{
+	int	i;
+	int	j;
+	
+	if (!check_walls(map->map))
+		return (0);
+	i = 0;
+	while (map->map[i])
+	{
+		j = 0;
+		while (map->map[i][j])
+		{
+			if (map->map[i][j] == '0')
+			{
+				if (is_valid(map->map[i][j - 1]) && is_valid(map->map[i][j + 1])
+					&& is_valid(map->map[i + 1][j]) && is_valid(map->map[i - 1][j]))
+					j++;
+				else
+					return (write(2, "invalid map\n", 13), 0);
+			}
+			else
+				j++;
+		}
+		i++;
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ieddaoud <ieddaoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 18:17:15 by ieddaoud          #+#    #+#             */
-/*   Updated: 2025/10/05 01:31:21 by ieddaoud         ###   ########.fr       */
+/*   Updated: 2025/10/11 17:43:51 by ieddaoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ char	*get_l(char *backup)
 		i++;
 	if (backup[i] == '\n')
 		i++;
-	rest = ft_alloc(sizeof(char) * i + 1);
+	// rest = ft_alloc(sizeof(char) * i + 1);
+	rest = malloc(sizeof(char) * i + 1);
 	if (!rest)
 		return (NULL);
 	while (j < i)

@@ -1,5 +1,5 @@
 CC = cc 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
 # MFLAGS = -lmlx -framework AppKit -framework OpenGL
 # MFLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm
 SRC = free.c parsing/get_next_line.c parsing/get_next_line_utils.c parsing/main.c parsing/pars_map.c parsing/tools.c parsing/tools2.c
